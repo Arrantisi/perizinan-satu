@@ -1,0 +1,51 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+// Contoh pakai PostgreSQL
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  name      String
+  password  String
+  email     String   @unique
+  role      Role     @default(EMPLOYEE)
+  leaves    Leave[] // Relasi ke surat izin
+  createdAt DateTime @default(now())
+}
+
+model Leave {
+  id         String      @id @default(cuid())
+  userId     String
+  user       User        @relation(fields: [userId], references: [id])
+  startDate  DateTime
+  endDate    DateTime
+  type       String
+  reason     String
+  status     LeaveStatus @default(PENDING)
+  reviewedBy String? // bos yang menyetujui (optional)
+  reviewedAt DateTime? // waktu disetujui atau ditolak
+  createdAt  DateTime    @default(now())
+}
+
+enum Role {
+  EMPLOYEE
+  BOSS
+}
+
+enum LeaveStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}

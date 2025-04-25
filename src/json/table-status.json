@@ -1,0 +1,24 @@
+[
+  {
+    "type": "Tanggal",
+    "accesor": "tanggal",
+    "className": "hidden md:block"
+  },
+  {
+    "type": "Jenis Izin",
+    "accesor": "jenisIzin"
+  },
+  {
+    "type": "Status",
+    "accesor": "status"
+  },
+  {
+    "type": "Alasan",
+    "accesor": "alasan",
+    "className": "hidden lg:block"
+  },
+  {
+    "type": "action",
+    "accesor": "action"
+  }
+]

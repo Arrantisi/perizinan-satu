@@ -1,0 +1,29 @@
+[
+  {
+    "type": "Karywan",
+    "accesor": "karywan"
+  },
+  {
+    "type": "Tanggal",
+    "accesor": "tanggal",
+    "className": "hidden md:table-cell"
+  },
+  {
+    "type": "Jenis Izin",
+    "accesor": "jenisIzin",
+    "className": "hidden lg:table-cell"
+  },
+  {
+    "type": "Status",
+    "accesor": "status"
+  },
+  {
+    "type": "Alasan",
+    "accesor": "alasan",
+    "className": "hidden xl:table-cell"
+  },
+  {
+    "type": "action",
+    "accesor": "action"
+  }
+]

@@ -1,0 +1,28 @@
+[
+  {
+    "type": "",
+    "accesor": "img"
+  },
+  {
+    "type": "Name",
+    "accesor": "name"
+  },
+  {
+    "type": "Email",
+    "accesor": "email",
+    "className": "hidden md:table-cell"
+  },
+  {
+    "type": "Role",
+    "accesor": "role",
+    "className": "hidden lg:table-cell"
+  },
+  {
+    "type": "Created",
+    "accesor": "status"
+  },
+  {
+    "type": "Action",
+    "accesor": "action"
+  }
+]
