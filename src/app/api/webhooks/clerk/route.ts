@@ -1,10 +1,11 @@
 import { prisma } from "@/lib/prisma";
 import { NextRequest, NextResponse } from "next/server";
 
-export const POST = async (req: NextRequest) => {
+export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
     const clerkId = body.data.id;
+    console.log("Webhook received:", body);
 
     console.log("Received Clerk webhook:", body.type);
 
@@ -76,4 +77,4 @@ export const POST = async (req: NextRequest) => {
       { status: 500 }
     );
   }
-};
+}
