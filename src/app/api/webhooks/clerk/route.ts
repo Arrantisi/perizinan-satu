@@ -7,7 +7,7 @@ export async function POST(req: NextRequest) {
     const clerkId = body.data.id;
     console.log("Webhook received:", body);
 
-    console.log("Received Clerk webhook:", body.type);
+    console.log("Received Clerk webhook:", JSON.stringify(body, null, 2));
 
     if (body.type === "user.created") {
       const { id, email_addresses, first_name, last_name } = body.data;
