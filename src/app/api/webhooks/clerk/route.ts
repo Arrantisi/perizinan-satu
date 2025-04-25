@@ -73,7 +73,7 @@ export async function POST(req: NextRequest) {
   } catch (error) {
     console.error("Clerk webhook error:", error);
     return NextResponse.json(
-      { message: "Internal Server Error" },
+      { message: `Internal Server Error ${error}` },
       { status: 500 }
     );
   }
