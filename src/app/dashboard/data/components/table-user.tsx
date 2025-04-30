@@ -19,9 +19,11 @@ const TableUser = async () => {
             </Avatar>
           </TableCell>
           <TableCell className="capitalize">{user.name}</TableCell>
-          <TableCell>{user.email}</TableCell>
-          <TableCell>{user.role}</TableCell>
-          <TableCell>{formattedDate(user.createdAt)}</TableCell>
+          <TableCell className="hidden lg:table-cell">{user.email}</TableCell>
+          <TableCell className="hidden lg:table-cell">{user.role}</TableCell>
+          <TableCell className="hidden lg:table-cell">
+            {formattedDate(user.createdAt)}
+          </TableCell>
           <TableCell>
             <DropdownTableData id={user.id} />
           </TableCell>

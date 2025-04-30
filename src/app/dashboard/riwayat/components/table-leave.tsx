@@ -15,11 +15,13 @@ const TableLeave = async () => {
           <TableRow key={leave.id}>
             {leave.status !== "PENDING" && (
               <>
-                <TableCell className="hidden md:table-cell">
+                <TableCell>
                   {formattedDate(leave.startDate)} -{" "}
                   {formattedDate(leave.endDate)}
                 </TableCell>
-                <TableCell>{leave.type}</TableCell>
+                <TableCell className="hidden md:table-cell">
+                  {leave.type}
+                </TableCell>
                 <TableCell>
                   <StatusBadge status={leave.status} />
                 </TableCell>

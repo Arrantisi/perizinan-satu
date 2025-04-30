@@ -1,4 +1,3 @@
-import columns from "@/json/table-daftar.json";
 import TableComponent from "@/components/table/table";
 import {
   Card,
@@ -10,6 +9,37 @@ import {
 import { Suspense } from "react";
 import TableLeave from "./components/table-leave";
 import { SkeletonTable } from "@/components/skeletons";
+
+const columns = [
+  {
+    type: "Karywan",
+    accesor: "karywan",
+    className: "hidden md:table-cell",
+  },
+  {
+    type: "Tanggal",
+    accesor: "tanggal",
+  },
+  {
+    type: "Jenis Izin",
+    accesor: "jenisIzin",
+    className: "hidden lg:table-cell",
+  },
+  {
+    type: "Status",
+    accesor: "status",
+    className: "hidden md:table-cell",
+  },
+  {
+    type: "Alasan",
+    accesor: "alasan",
+    className: "hidden lg:table-cell",
+  },
+  {
+    type: "action",
+    accesor: "action",
+  },
+];
 
 const PersetujuanPage = async () => {
   return (

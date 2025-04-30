@@ -15,7 +15,7 @@ const TableLeave = async () => {
       {leaves?.map((leave) => {
         return (
           <TableRow key={leave.id}>
-            <TableCell>
+            <TableCell className="hidden md:table-cell">
               <div className="flex items-center gap-1">
                 <Avatar>
                   <AvatarImage />
@@ -34,8 +34,8 @@ const TableLeave = async () => {
             <TableCell>
               {formattedDate(leave.startDate)} - {formattedDate(leave.endDate)}
             </TableCell>
-            <TableCell>{leave.type}</TableCell>
-            <TableCell>
+            <TableCell className="hidden lg:table-cell">{leave.type}</TableCell>
+            <TableCell className="hidden lg:table-cell">
               <StatusBadge status={leave.status} />
             </TableCell>
             <TableCell className="truncate max-w-[10rem] hidden xl:table-cell">

@@ -25,6 +25,7 @@ const columns = [
   {
     type: "Jenis Izin",
     accesor: "jenisIzin",
+    className: "hidden lg:table-cell",
   },
   {
     type: "Status",
@@ -33,10 +34,12 @@ const columns = [
   {
     type: "Alasan ditolak",
     accesor: "alasan",
+    className: "hidden lg:table-cell",
   },
   {
     type: "Dibuat",
     accesor: "dibuat",
+    className: "hidden lg:table-cell",
   },
   {
     type: "action",

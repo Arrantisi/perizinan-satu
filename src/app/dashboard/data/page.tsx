@@ -6,10 +6,39 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import columns from "@/json/table-data-karyawan.json";
 import TableUser from "./components/table-user";
 import { Suspense } from "react";
 import { SkeletonTable } from "@/components/skeletons";
+
+const columns = [
+  {
+    type: "",
+    accesor: "img",
+  },
+  {
+    type: "Name",
+    accesor: "name",
+  },
+  {
+    type: "Email",
+    accesor: "email",
+    className: "hidden lg:table-cell",
+  },
+  {
+    type: "Role",
+    accesor: "role",
+    className: "hidden lg:table-cell",
+  },
+  {
+    type: "Created",
+    accesor: "status",
+    className: "hidden lg:table-cell",
+  },
+  {
+    type: "Action",
+    accesor: "action",
+  },
+];
 
 const DataPage = async () => {
   return (

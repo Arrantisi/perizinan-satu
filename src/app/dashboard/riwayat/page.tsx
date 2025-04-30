@@ -9,6 +9,7 @@ import {
 import { Suspense } from "react";
 import TableLeave from "./components/table-leave";
 import { SkeletonTable } from "@/components/skeletons";
+
 const columns = [
   {
     type: "Tanggal",
@@ -17,6 +18,7 @@ const columns = [
   {
     type: "Jenis Izin",
     accesor: "jenisIzin",
+    className: "hidden lg:table-cell",
   },
   {
     type: "Status",
@@ -25,11 +27,13 @@ const columns = [
   {
     type: "Alasan",
     accesor: "alasan",
+    className: "hidden lg:table-cell",
   },
 
   {
     type: "Dibuat",
     accesor: "dibuat",
+    className: "hidden lg:table-cell",
   },
   {
     type: "action",

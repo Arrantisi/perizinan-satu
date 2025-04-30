@@ -1,7 +1,8 @@
 [
   {
     "type": "Karywan",
-    "accesor": "karywan"
+    "accesor": "karywan",
+    "className": "hidden md:table-cell"
   },
   {
     "type": "Tanggal",
@@ -9,7 +10,8 @@
   },
   {
     "type": "Jenis Izin",
-    "accesor": "jenisIzin"
+    "accesor": "jenisIzin",
+    "className": "hidden lg:table-cell"
   },
   {
     "type": "Status",
@@ -17,7 +19,8 @@
   },
   {
     "type": "Alasan",
-    "accesor": "alasan"
+    "accesor": "alasan",
+    "className": "hidden lg:table-cell"
   },
   {
     "type": "action",
