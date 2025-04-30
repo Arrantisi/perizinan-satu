@@ -1,3 +1,5 @@
+"use client";
+
 import {
   SidebarGroup,
   SidebarGroupContent,
@@ -17,6 +19,7 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import NavLoader from "./nav-loader";
+import { usePathname } from "next/navigation";
 
 const menu = [
   {
@@ -70,13 +73,15 @@ const menu = [
 ];
 
 const NavMain = ({ userRole }: { userRole?: string }) => {
+  const pathname = usePathname();
+
   if (!userRole) return <NavLoader />;
 
   return (
     <SidebarGroup>
       <SidebarGroupContent>
         <SidebarMenu>
-          <SidebarMenuItem className="text-primary-foreground bg-primary hover:bg-primary/90 py-1 px-2 mb-2 rounded-sm">
+          <SidebarMenuItem className="text-primary-foreground bg-primary py-1 px-2 mb-2 rounded-sm">
             Menu
           </SidebarMenuItem>
         </SidebarMenu>
@@ -85,7 +90,11 @@ const NavMain = ({ userRole }: { userRole?: string }) => {
             if (item.visible.includes(userRole)) {
               return (
                 <SidebarMenuItem key={item.name}>
-                  <SidebarMenuButton tooltip={item.name} asChild>
+                  <SidebarMenuButton
+                    tooltip={item.name}
+                    asChild
+                    isActive={item.link === pathname}
+                  >
                     <Link href={item.link}>
                       {item.icon && <item.icon />}
                       <span>{item.name}</span>

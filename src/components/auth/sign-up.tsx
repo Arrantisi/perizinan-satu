@@ -40,7 +40,7 @@ const SignUpComponent = () => {
                           <Label>first name</Label>
                         </Clerk.Label>
                         <Clerk.Input required asChild>
-                          <Input placeholder="username" />
+                          <Input placeholder="John" />
                         </Clerk.Input>
                         <Clerk.FieldError className="block text-xs text-destructive" />
                       </Clerk.Field>
@@ -52,7 +52,7 @@ const SignUpComponent = () => {
                           <Label>last name</Label>
                         </Clerk.Label>
                         <Clerk.Input required asChild>
-                          <Input placeholder="username" />
+                          <Input placeholder="Simmons" />
                         </Clerk.Input>
                         <Clerk.FieldError className="block text-xs text-destructive" />
                       </Clerk.Field>
@@ -117,7 +117,7 @@ const SignUpComponent = () => {
                       Continue with Google
                     </Button>
                   </div>
-                  <span className="text-balance text-center text-xs text-muted-foreground pt-4 [&_span]:underline [&_span]:underline-offset-4 [&_span]:hover:text-primary">
+                  <span className="text-balance text-center [&_span]:cursor-pointer text-xs text-muted-foreground pt-4 [&_span]:underline [&_span]:underline-offset-4 [&_span]:hover:text-primary">
                     By clicking continue, you agree to our{" "}
                     <span>Terms of Service</span> and{" "}
                     <span>Privacy Policy</span>.
@@ -129,76 +129,76 @@ const SignUpComponent = () => {
                   className="w-full flex flex-col justify-center items-center gap-2"
                 >
                   <SignUp.Strategy name="email_code">
-                    <CardTitle>Verify your email</CardTitle>
-                    <CardDescription>
-                      Use the verification link sent to your email address
-                    </CardDescription>
-                    <Clerk.Field name="code" className="space-y-2">
-                      <Clerk.Label className="sr-only">
-                        Email address
-                      </Clerk.Label>
-                      <div className="flex justify-center text-center">
-                        <Clerk.Input
-                          type="otp"
-                          className="flex justify-center has-[:disabled]:opacity-50"
-                          autoSubmit
-                          render={({ value, status }) => {
-                            return (
-                              <div
-                                data-status={status}
-                                className={cn(
-                                  "relative flex size-10 items-center justify-center border-y border-r border-input text-sm transition-all first:rounded-l-md first:border-l last:rounded-r-md",
-                                  {
-                                    "z-10 ring-2 ring-ring ring-offset-background":
-                                      status === "cursor" ||
-                                      status === "selected",
-                                  }
-                                )}
-                              >
-                                {value}
-                                {status === "cursor" && (
-                                  <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
-                                    <div className="animate-caret-blink h-4 w-px bg-foreground duration-1000" />
-                                  </div>
-                                )}
-                              </div>
-                            );
-                          }}
-                        />
-                      </div>
-                      <Clerk.FieldError className="block text-xs text-destructive" />
-                    </Clerk.Field>
-                    <SignUp.Action
-                      asChild
-                      resend
-                      className="text-muted-foreground"
-                      fallback={({ resendableAfter }) => (
-                        <Button variant="link" size="sm" disabled>
-                          Didn&apos;t receive a code? Resend (
-                          <span className="tabular-nums">
-                            {resendableAfter}
-                          </span>
-                          )
+                    <div className="flex item-center justify-center flex-col gap-4">
+                      <CardTitle>Verify your email</CardTitle>
+                      <CardDescription>
+                        Use the verification link sent to your email address
+                      </CardDescription>
+                      <Clerk.Field name="code" className="space-y-2">
+                        <Clerk.Label>Email address</Clerk.Label>
+                        <div className="flex justify-center text-center">
+                          <Clerk.Input
+                            type="otp"
+                            className="flex justify-center has-[:disabled]:opacity-50"
+                            autoSubmit
+                            render={({ value, status }) => {
+                              return (
+                                <div
+                                  data-status={status}
+                                  className={cn(
+                                    "relative flex size-10 items-center justify-center border-y border-r border-input text-sm transition-all first:rounded-l-md first:border-l last:rounded-r-md",
+                                    {
+                                      "z-10 ring-2 ring-ring ring-offset-background":
+                                        status === "cursor" ||
+                                        status === "selected",
+                                    }
+                                  )}
+                                >
+                                  {value}
+                                  {status === "cursor" && (
+                                    <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
+                                      <div className="animate-caret-blink h-4 w-px bg-foreground duration-1000" />
+                                    </div>
+                                  )}
+                                </div>
+                              );
+                            }}
+                          />
+                        </div>
+                        <Clerk.FieldError className="block text-xs text-destructive" />
+                      </Clerk.Field>
+                      <SignUp.Action
+                        asChild
+                        resend
+                        className="text-muted-foreground"
+                        fallback={({ resendableAfter }) => (
+                          <Button variant="link" size="sm" disabled>
+                            Didn&apos;t receive a code? Resend (
+                            <span className="tabular-nums">
+                              {resendableAfter}
+                            </span>
+                            )
+                          </Button>
+                        )}
+                      >
+                        <Button variant={"link"} type="button" size={"sm"}>
+                          Didn&apos;t receive a code? Resend
                         </Button>
-                      )}
-                    >
-                      <Button variant={"link"} type="button" size={"sm"}>
-                        Didn&apos;t receive a code? Resend
-                      </Button>
-                    </SignUp.Action>
-                    <SignUp.Action asChild submit>
-                      <Button disabled={isGlobalLoading}>
-                        <Clerk.Loading>
-                          {(isLoading) => {
-                            return isLoading ? (
-                              <Loader2 className="animate-spin" size={16} />
-                            ) : (
-                              "Contiune"
-                            );
-                          }}
-                        </Clerk.Loading>
-                      </Button>
-                    </SignUp.Action>
+                      </SignUp.Action>
+                      <SignUp.Action asChild submit>
+                        <Button type="submit" disabled={isGlobalLoading}>
+                          <Clerk.Loading>
+                            {(isLoading) => {
+                              return isLoading ? (
+                                <Loader2 className="animate-spin" size={16} />
+                              ) : (
+                                "Contiune"
+                              );
+                            }}
+                          </Clerk.Loading>
+                        </Button>
+                      </SignUp.Action>
+                    </div>
                   </SignUp.Strategy>
                 </SignUp.Step>
               </>

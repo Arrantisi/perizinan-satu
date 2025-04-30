@@ -26,17 +26,18 @@ model User {
 }
 
 model Leave {
-  id         String      @id @default(cuid())
-  userId     String
-  user       User        @relation(fields: [userId], references: [id])
-  startDate  DateTime
-  endDate    DateTime
-  type       String
-  reason     String
-  status     LeaveStatus @default(PENDING)
-  reviewedBy String? // bos yang menyetujui (optional)
-  reviewedAt DateTime? // waktu disetujui atau ditolak
-  createdAt  DateTime    @default(now())
+  id             String      @id @default(cuid())
+  userId         String
+  user           User        @relation(fields: [userId], references: [id])
+  startDate      DateTime
+  endDate        DateTime
+  type           String
+  reason         String
+  reasonRejected String?
+  status         LeaveStatus @default(PENDING)
+  reviewedBy     String? // bos yang menyetujui (optional)
+  reviewedAt     DateTime? // waktu disetujui atau ditolak
+  createdAt      DateTime    @default(now())
 }
 
 enum Role {

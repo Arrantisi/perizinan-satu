@@ -1,3 +1,6 @@
+"use client";
+
+import { toast } from "sonner";
 import {
   AlertDialogCancel,
   AlertDialogContent,
@@ -6,8 +9,36 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "../ui/alert-dialog";
+import { deleteLeave } from "@/lib/action";
+import { useState } from "react";
+import { FileMinus2, Loader2 } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { Button } from "../ui/button";
 
-const DeleteDialog = () => {
+const DeleteDialog = ({ leaveId }: { leaveId: string }) => {
+  const [loader, setLoader] = useState(false);
+
+  const router = useRouter();
+
+  const handleDelete = async () => {
+    setLoader(true);
+    try {
+      const deleteLeaveById = await deleteLeave(leaveId);
+      console.log(deleteLeaveById);
+
+      if (deleteLeaveById.success) {
+        toast(deleteLeaveById.message, {
+          icon: <FileMinus2 />,
+        });
+      }
+    } catch (error) {
+      toast.error("ada kesalah yang tidak terduga");
+      console.error("kesalahan yang tidak terduga: " + error);
+    } finally {
+      setLoader(false);
+      router.refresh();
+    }
+  };
   return (
     <AlertDialogContent>
       <AlertDialogHeader>
@@ -18,6 +49,13 @@ const DeleteDialog = () => {
         </AlertDialogDescription>
       </AlertDialogHeader>
       <AlertDialogFooter>
+        <Button
+          variant={"destructive"}
+          className="w-20"
+          onClick={() => handleDelete()}
+        >
+          {loader ? <Loader2 className="animate-spin" /> : "Hapus"}
+        </Button>
         <AlertDialogCancel>Cancel</AlertDialogCancel>
       </AlertDialogFooter>
     </AlertDialogContent>

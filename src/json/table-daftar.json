@@ -5,13 +5,11 @@
   },
   {
     "type": "Tanggal",
-    "accesor": "tanggal",
-    "className": "hidden md:table-cell"
+    "accesor": "tanggal"
   },
   {
     "type": "Jenis Izin",
-    "accesor": "jenisIzin",
-    "className": "hidden lg:table-cell"
+    "accesor": "jenisIzin"
   },
   {
     "type": "Status",
@@ -19,8 +17,7 @@
   },
   {
     "type": "Alasan",
-    "accesor": "alasan",
-    "className": "hidden xl:table-cell"
+    "accesor": "alasan"
   },
   {
     "type": "action",

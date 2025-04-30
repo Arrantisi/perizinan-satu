@@ -1,6 +1,3 @@
-"use client";
-
-import KaryawanRowTable from "@/components/table/karyawan-row-table";
 import TableComponent from "@/components/table/table";
 import {
   Card,
@@ -10,22 +7,11 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import columns from "@/json/table-data-karyawan.json";
-import { getUser } from "@/lib/action";
-import { User } from "@prisma/client";
-import { useEffect, useState } from "react";
+import TableUser from "./components/table-user";
+import { Suspense } from "react";
+import { SkeletonTable } from "@/components/skeletons";
 
-const DataPage = () => {
-  const [users, setUsers] = useState<User[]>([]);
-
-  const fetchUser = async () => {
-    const data = await getUser();
-    setUsers(data);
-  };
-
-  useEffect(() => {
-    fetchUser();
-  }, []);
-
+const DataPage = async () => {
   return (
     <Card>
       <CardHeader>
@@ -37,9 +23,9 @@ const DataPage = () => {
       </CardHeader>
       <CardContent>
         <TableComponent columns={columns}>
-          {users.map((user) => (
-            <KaryawanRowTable key={user.id} user={user} />
-          ))}
+          <Suspense fallback={<SkeletonTable />}>
+            <TableUser />
+          </Suspense>
         </TableComponent>
       </CardContent>
     </Card>

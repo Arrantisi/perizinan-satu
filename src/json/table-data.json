@@ -1,8 +1,7 @@
 [
   {
     "type": "Tanggal",
-    "accesor": "tanggal",
-    "className": "hidden md:block"
+    "accesor": "tanggal"
   },
   {
     "type": "Jenis Izin",
@@ -14,8 +13,12 @@
   },
   {
     "type": "Alasan",
-    "accesor": "alasan",
-    "className": "hidden lg:block"
+    "accesor": "alasan"
+  },
+
+  {
+    "type": "Dibuat",
+    "accesor": "dibuat"
   },
   {
     "type": "action",

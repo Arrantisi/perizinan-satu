@@ -12,5 +12,4 @@ type TableColumnType = {
 export interface ButtonPesetujuanInter
   extends React.ComponentPropsWithRef<typeof Button> {
   id: string;
-  onSuccess: () => void;
 }

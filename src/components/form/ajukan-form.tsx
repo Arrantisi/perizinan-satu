@@ -7,6 +7,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Form,
   FormControl,
+  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -22,9 +23,11 @@ import { Textarea } from "../ui/textarea";
 import { toast } from "sonner";
 import { ajukanIzin } from "@/lib/action";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
-const AjukanForm = () => {
+const AjukanForm = ({ takenDate }: { takenDate: Date[] }) => {
   const [loader, setLoader] = useState(false);
+  const router = useRouter();
 
   const form = useForm<AjukanScemaType>({
     resolver: zodResolver(ajukanSchema),
@@ -44,10 +47,16 @@ const AjukanForm = () => {
   const onSubmit = async (values: AjukanScemaType) => {
     try {
       setLoader(true);
-      await ajukanIzin(values);
-      toast("Pengajuan sudah berhasil terkirim", {
-        icon: <FileCheck2Icon />,
-      });
+      const handleLeave = await ajukanIzin(values);
+      if (handleLeave.success) {
+        toast(handleLeave.message, {
+          icon: <FileCheck2Icon />,
+        });
+        form.reset();
+        router.refresh();
+      } else {
+        toast.error(handleLeave.message);
+      }
     } catch (error) {
       toast.error("Perizinan tidak bisa di ajukan");
       console.error(error);
@@ -98,12 +107,25 @@ const AjukanForm = () => {
                       mode="range"
                       selected={field.value}
                       onSelect={field.onChange}
-                      disabled={(date) =>
-                        date < new Date(new Date().setHours(0, 0, 0, 0))
-                      }
+                      disabled={(date) => {
+                        const today = new Date();
+                        today.setHours(0, 0, 0, 0);
+                        return (
+                          date < today ||
+                          takenDate.some(
+                            (value) =>
+                              value.toDateString() === date.toDateString()
+                          )
+                        );
+                      }}
+                      modifiers={{ takenDate }}
                     />
                   </PopoverContent>
                 </Popover>
+                <FormDescription>
+                  Pilih tanggal saat pengajuan izin dilakukan. Pengajuan hanya
+                  dapat dilakukan maksimal 12 kali dalam setahun.
+                </FormDescription>
                 <FormMessage />
               </FormItem>
             )}
@@ -120,6 +142,10 @@ const AjukanForm = () => {
                     {...field}
                   />
                 </FormControl>
+                <FormDescription>
+                  ebutkan jenis izin yang diajukan, misalnya izin usaha, izin
+                  mendirikan bangunan, dll.
+                </FormDescription>
                 <FormMessage />
               </FormItem>
             )}
@@ -137,6 +163,11 @@ const AjukanForm = () => {
                     {...field}
                   />
                 </FormControl>
+                <FormDescription>
+                  Dengan form ini, diharapkan proses pengajuan izin dapat
+                  berjalan lebih efisien dan transparan, serta memudahkan pihak
+                  berwenang dalam melakukan evaluasi.
+                </FormDescription>
                 <FormMessage />
               </FormItem>
             )}
@@ -150,7 +181,11 @@ const AjukanForm = () => {
                 <FormControl>
                   <Input defaultValue={field.value} disabled />
                 </FormControl>
-                <FormMessage />
+                <FormDescription>
+                  Dengan form ini, pemohon dapat dengan mudah memahami bahwa
+                  pengajuan mereka sedang diproses dan perlu menunggu pembaruan
+                  lebih lanjut.
+                </FormDescription>
               </FormItem>
             )}
           />

@@ -11,7 +11,6 @@ import { Dialog, DialogTrigger } from "../ui/dialog";
 import ViewDialog from "../dialog/view-dialog";
 import { AlertDialog, AlertDialogTrigger } from "../ui/alert-dialog";
 import DeleteDialog from "../dialog/delete-dialog";
-
 const DropdownTable = ({
   deleteType = "hapus",
   id,
@@ -41,7 +40,7 @@ const DropdownTable = ({
           </DropdownMenuContent>
         </DropdownMenu>
 
-        <DeleteDialog />
+        <DeleteDialog leaveId={id} />
         <ViewDialog id={id} />
       </AlertDialog>
     </Dialog>

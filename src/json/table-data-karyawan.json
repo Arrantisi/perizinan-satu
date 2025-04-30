@@ -9,13 +9,11 @@
   },
   {
     "type": "Email",
-    "accesor": "email",
-    "className": "hidden md:table-cell"
+    "accesor": "email"
   },
   {
     "type": "Role",
-    "accesor": "role",
-    "className": "hidden lg:table-cell"
+    "accesor": "role"
   },
   {
     "type": "Created",

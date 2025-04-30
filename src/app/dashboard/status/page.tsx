@@ -1,3 +1,5 @@
+"use client";
+
 import StatusBadge from "@/components/status-badge";
 import DropdownTable from "@/components/dropdown/leave-dropdown-table";
 import TableComponent from "@/components/table/table";
@@ -9,12 +11,53 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { TableCell, TableRow } from "@/components/ui/table";
-import columns from "@/json/table-status.json";
-import { prisma } from "@/lib/prisma";
 import formattedDate from "@/utils/date-format";
+import { getLeave } from "@/lib/action";
+import { useEffect, useState } from "react";
+import { Leave } from "@prisma/client";
+import { SkeletonTable } from "@/components/skeletons";
 
-const StatusPage = async () => {
-  const menu = await prisma.leave.findMany();
+const columns = [
+  {
+    type: "Tanggal",
+    accesor: "tanggal",
+  },
+  {
+    type: "Jenis Izin",
+    accesor: "jenisIzin",
+  },
+  {
+    type: "Status",
+    accesor: "status",
+  },
+  {
+    type: "Alasan ditolak",
+    accesor: "alasan",
+  },
+  {
+    type: "Dibuat",
+    accesor: "dibuat",
+  },
+  {
+    type: "action",
+    accesor: "action",
+  },
+];
+
+const StatusPage = () => {
+  const [leaves, setLeaves] = useState<Leave[] | null>(null);
+  const [loader, setLoader] = useState(false);
+
+  const fetchLeave = async () => {
+    setLoader(true);
+    const leave = await getLeave();
+    setLeaves(leave);
+    setLoader(false);
+  };
+
+  useEffect(() => {
+    fetchLeave();
+  }, []);
 
   return (
     <Card>
@@ -27,26 +70,33 @@ const StatusPage = async () => {
       </CardHeader>
       <CardContent>
         <TableComponent columns={columns}>
-          {menu.map((item) => {
-            return (
-              <TableRow key={item.id}>
-                <TableCell className="hidden md:table-cell">
-                  {formattedDate(item.startDate)} -{" "}
-                  {formattedDate(item.endDate)}
-                </TableCell>
-                <TableCell>{item.type}</TableCell>
-                <TableCell>
-                  <StatusBadge status={item.status} />
-                </TableCell>
-                <TableCell className="truncate max-w-[10rem] hidden lg:table-cell">
-                  {item.reason}
-                </TableCell>
-                <TableCell>
-                  <DropdownTable deleteType="batal" id={item.id} />
-                </TableCell>
-              </TableRow>
-            );
-          })}
+          {loader ? (
+            <SkeletonTable />
+          ) : (
+            leaves?.map((leave) => {
+              return (
+                <TableRow key={leave.id}>
+                  <TableCell className="hidden md:table-cell">
+                    {formattedDate(leave.startDate)} -{" "}
+                    {formattedDate(leave.endDate)}
+                  </TableCell>
+                  <TableCell>{leave.type}</TableCell>
+                  <TableCell>
+                    <StatusBadge status={leave.status} />
+                  </TableCell>
+                  <TableCell className="truncate max-w-[10rem] hidden lg:table-cell">
+                    {leave.reasonRejected || "-"}
+                  </TableCell>
+                  <TableCell className="truncate max-w-[10rem] hidden lg:table-cell">
+                    {formattedDate(leave.createdAt)}
+                  </TableCell>
+                  <TableCell>
+                    <DropdownTable deleteType="batal" id={leave.id} />
+                  </TableCell>
+                </TableRow>
+              );
+            })
+          )}
         </TableComponent>
       </CardContent>
     </Card>
