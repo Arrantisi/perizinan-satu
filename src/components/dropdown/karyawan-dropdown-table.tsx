@@ -16,14 +16,7 @@ import { useState } from "react";
 import { AlertDialog, AlertDialogTrigger } from "../ui/alert-dialog";
 import DeleteUserDialog from "../dialog/delete-user-dialog";
 
-const DropdownTableData = ({
-  id,
-  onSuccess,
-}: {
-  id: string;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  onSuccess?: (data: any) => void;
-}) => {
+const DropdownTableData = ({ id }: { id: string }) => {
   const [open, setOpen] = useState(false);
   const [dialogType, setDialogType] = useState<"view" | "update" | null>(null);
 
@@ -58,11 +51,7 @@ const DropdownTableData = ({
         {dialogType === "view" ? (
           <ViewDialogKaryawan id={id} />
         ) : (
-          <KaryawanUpdateDialog
-            id={id}
-            onClose={() => setOpen(false)}
-            onSuccess={onSuccess}
-          />
+          <KaryawanUpdateDialog id={id} onClose={() => setOpen(false)} />
         )}
         <DeleteUserDialog userId={id} />
       </AlertDialog>

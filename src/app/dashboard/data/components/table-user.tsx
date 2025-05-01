@@ -3,15 +3,19 @@ import { TableRow, TableCell } from "@/components/ui/table";
 import { getUser } from "@/lib/action";
 import formattedDate from "@/utils/date-format";
 import getInitialName from "@/utils/fullName";
+import { currentUser } from "@clerk/nextjs/server";
 import { Avatar, AvatarFallback } from "@radix-ui/react-avatar";
 import React from "react";
 
 const TableUser = async () => {
   const users = await getUser();
+  const CurrentUser = await currentUser();
+
+  const userLogin = users.filter((user) => user.id !== CurrentUser?.id);
 
   return (
     <>
-      {users.map((user) => (
+      {userLogin.map((user) => (
         <TableRow key={user.id}>
           <TableCell>
             <Avatar>

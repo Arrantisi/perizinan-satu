@@ -30,19 +30,19 @@ import {
 import { Button } from "../ui/button";
 import { ButtonLoader } from "../buttons";
 import { Input } from "../ui/input";
+import { useRouter } from "next/navigation";
 
 const KaryawanUpdateDialog = ({
   id,
   onClose,
-  onSuccess,
 }: {
   id: string;
   onClose: () => void;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  onSuccess?: (data: any) => void;
 }) => {
   const [user, setUser] = useState<User | null>(null);
   const [loader, setLoader] = useState(false);
+
+  const router = useRouter();
 
   useEffect(() => {
     const fetchUser = async (id: string) => {
@@ -69,12 +69,11 @@ const KaryawanUpdateDialog = ({
       const updateRole = await updateUserRole(id, value);
 
       if (updateRole.success) {
-        const updateUser = await getUserById(id);
-        onSuccess?.(updateUser);
         toast(updateRole.message, {
           icon: <UserCog2 />,
         });
         onClose();
+        router.refresh();
       } else {
         toast.error("Masalah di server");
       }
