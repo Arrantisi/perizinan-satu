@@ -56,8 +56,11 @@ const AlertRejectedDialog = ({
         toast(leave.message, {
           icon: <FileX2Icon />,
         });
+
         form.reset();
+
         onSuccess();
+
         router.refresh();
       } else {
         toast.error("Masalah di server");
@@ -100,15 +103,15 @@ const AlertRejectedDialog = ({
               )}
             />
             <AlertDialogFooter className="mt-4">
-              <AlertDialogCancel>Batalkan</AlertDialogCancel>
               <Button
                 type="submit"
                 variant={"destructive"}
-                className="w-20"
+                className="w-full lg:w-20"
                 disabled={loader}
               >
                 {loader ? <Loader2 className="animate-spin" /> : "Tolak"}
               </Button>
+              <AlertDialogCancel>Batalkan</AlertDialogCancel>
             </AlertDialogFooter>
           </form>
         </Form>

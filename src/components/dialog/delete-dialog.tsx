@@ -49,14 +49,14 @@ const DeleteDialog = ({ leaveId }: { leaveId: string }) => {
         </AlertDialogDescription>
       </AlertDialogHeader>
       <AlertDialogFooter>
+        <AlertDialogCancel>Cancel</AlertDialogCancel>
         <Button
           variant={"destructive"}
-          className="w-20"
+          className="w-full md:w-20"
           onClick={() => handleDelete()}
         >
           {loader ? <Loader2 className="animate-spin" /> : "Hapus"}
         </Button>
-        <AlertDialogCancel>Cancel</AlertDialogCancel>
       </AlertDialogFooter>
     </AlertDialogContent>
   );

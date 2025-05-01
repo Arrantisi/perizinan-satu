@@ -23,7 +23,7 @@ const ViewDialogKaryawan = ({ id }: { id: string }) => {
   }, [id]);
 
   return (
-    <DialogContent>
+    <DialogContent className="text-xs">
       <DialogHeader>
         <DialogTitle>Kartu Karyawan</DialogTitle>
         <DialogDescription>
@@ -57,7 +57,7 @@ const ViewDialogKaryawan = ({ id }: { id: string }) => {
         {/* RIGHT */}
         <div className="flex flex-col gap-2">
           <span className="capitalize">{user?.name}</span>
-          <span>{user?.email}</span>
+          <span className="truncate max-w-50 md:max-w-full">{user?.email}</span>
           <span>{user?.role}</span>
         </div>
       </div>

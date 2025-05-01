@@ -20,19 +20,24 @@ export const ButtonLoader = ({
   );
 };
 
-export const ButtonSetuju = ({ id, ...props }: ButtonPesetujuanInter) => {
+export const ButtonSetuju = ({
+  leaveId,
+  onSuccess,
+  ...props
+}: ButtonPesetujuanInter) => {
   const [loader, setLoader] = useState(false);
   const router = useRouter();
 
-  const handlePersetujuan = async (id: string) => {
+  const handlePersetujuan = async (leaveId: string) => {
     setLoader(true);
 
     try {
-      const leave = await persetujuan(id);
+      const leave = await persetujuan(leaveId);
       if (leave.success) {
         toast(leave.message, {
           icon: <FileCheck2Icon />,
         });
+        onSuccess();
         router.refresh();
       } else {
         toast.error("masalah pada server");
@@ -47,15 +52,26 @@ export const ButtonSetuju = ({ id, ...props }: ButtonPesetujuanInter) => {
   };
 
   return loader ? (
-    <ButtonLoader className="w-1/3" />
+    <ButtonLoader className="w-1/2" />
   ) : (
-    <Button onClick={() => handlePersetujuan(id)} className="w-1/3" {...props}>
+    <Button
+      onClick={() => {
+        handlePersetujuan(leaveId);
+      }}
+      className="w-full md:w-1/2"
+      {...props}
+    >
       Setuju
     </Button>
   );
 };
 
-export const ButtonTolak = ({ leaveId }: { leaveId: string }) => {
+export const ButtonTolak = ({
+  leaveId,
+  onSuccess,
+
+  ...props
+}: ButtonPesetujuanInter) => {
   const [open, setOpen] = useState(false);
 
   return (
@@ -63,13 +79,22 @@ export const ButtonTolak = ({ leaveId }: { leaveId: string }) => {
       <AlertDialogTrigger asChild>
         <Button
           variant={"destructive"}
-          className="w-1/3"
-          onClick={() => setOpen(true)}
+          className="w-full lg:w-1/2"
+          onClick={() => {
+            setOpen(true);
+          }}
+          {...props}
         >
           Tolak
         </Button>
       </AlertDialogTrigger>
-      <AlertRejectedDialog leaveId={leaveId} onSuccess={() => setOpen(false)} />
+      <AlertRejectedDialog
+        leaveId={leaveId}
+        onSuccess={() => {
+          setOpen(false);
+          onSuccess();
+        }}
+      />
     </AlertDialog>
   );
 };

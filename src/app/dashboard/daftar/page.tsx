@@ -1,5 +1,4 @@
 import TableComponent from "@/components/table/table";
-import columns from "@/json/table-daftar.json";
 import {
   Card,
   CardContent,
@@ -10,6 +9,37 @@ import {
 import { Suspense } from "react";
 import { SkeletonTable } from "@/components/skeletons";
 import LeaveTable from "../table-leave";
+
+const columns = [
+  {
+    type: "Karywan",
+    accesor: "karywan",
+    className: "hidden md:table-cell",
+  },
+  {
+    type: "Tanggal",
+    accesor: "tanggal",
+  },
+  {
+    type: "Jenis Izin",
+    accesor: "jenisIzin",
+    className: "hidden lg:table-cell",
+  },
+  {
+    type: "Status",
+    accesor: "status",
+    className: "hidden lg:table-cell",
+  },
+  {
+    type: "Alasan",
+    accesor: "alasan",
+    className: "hidden xl:table-cell",
+  },
+  {
+    type: "action",
+    accesor: "action",
+  },
+];
 
 const DaftarPage = async () => {
   return (

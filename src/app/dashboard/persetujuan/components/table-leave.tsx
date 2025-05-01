@@ -1,18 +1,31 @@
-import { ButtonSetuju, ButtonTolak } from "@/components/buttons";
 import StatusBadge from "@/components/status-badge";
 import { TableRow, TableCell } from "@/components/ui/table";
 import { getAllLeave } from "@/lib/action";
 import formattedDate from "@/utils/date-format";
 import getInitialName from "@/utils/fullName";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
-import React from "react";
+import DialogPersetujuan from "@/components/dialog/dialog-persetujuan";
+import { Badge } from "@/components/ui/badge";
 
 const TableLeave = async () => {
   const leaves = await getAllLeave();
+  const pendingLeaves = leaves.filter((leave) => leave.status === "PENDING");
+
+  if (!pendingLeaves || pendingLeaves.length === 0) {
+    return (
+      <TableRow className="hover:bg-card">
+        <TableCell colSpan={9} className="text-center">
+          <Badge variant={"destructive"} className="my-7 dark:bg-red-700 p-1">
+            Tidak ada surat perizinan
+          </Badge>
+        </TableCell>
+      </TableRow>
+    );
+  }
 
   return (
     <>
-      {leaves?.map((leave) => {
+      {pendingLeaves?.map((leave) => {
         return (
           <TableRow key={leave.id}>
             <TableCell className="hidden md:table-cell">
@@ -42,10 +55,7 @@ const TableLeave = async () => {
               {leave.reason}
             </TableCell>
             <TableCell className="text-right">
-              <div className="flex items-center gap-2">
-                <ButtonSetuju id={leave.id} />
-                <ButtonTolak leaveId={leave.id} />
-              </div>
+              <DialogPersetujuan leaveId={leave.id} />
             </TableCell>
           </TableRow>
         );

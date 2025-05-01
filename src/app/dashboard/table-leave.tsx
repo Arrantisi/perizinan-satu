@@ -37,7 +37,7 @@ const LeaveTable = async () => {
               {formattedDate(leave.startDate)} - {formattedDate(leave.endDate)}
             </TableCell>
             <TableCell className="hidden lg:table-cell">{leave.type}</TableCell>
-            <TableCell>
+            <TableCell className="hidden md:table-cell">
               <StatusBadge status={leave.status} />
             </TableCell>
             <TableCell className="max-w-[10rem] truncate hidden xl:table-cell">

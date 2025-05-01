@@ -33,7 +33,7 @@ const columns = [
   {
     type: "Alasan",
     accesor: "alasan",
-    className: "hidden lg:table-cell",
+    className: "hidden xl:table-cell",
   },
   {
     type: "action",

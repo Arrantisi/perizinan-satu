@@ -149,6 +149,7 @@ export const ajukanIzin = async (form: AjukanScemaType) => {
 export const getLeaveById = async (id: string) => {
   return await prisma.leave.findUnique({
     where: { id: id },
+    include: { user: true },
   });
 };
 
