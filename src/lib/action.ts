@@ -50,7 +50,7 @@ export const deleteUser = async (userId: string) => {
     await clerkClient.users.deleteUser(userId);
     return { success: true, message: "user berhasil di hapus" };
   } catch (error) {
-    console.error("Delete failed:", error);
+    console.error("Delete failed:", String(error));
     return { success: false, message: "Hapus gagal" };
   }
 };

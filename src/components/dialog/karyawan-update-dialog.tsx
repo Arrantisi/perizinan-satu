@@ -1,4 +1,4 @@
-import { Mail, User2, UserCog2 } from "lucide-react";
+import { Loader2, Mail, User2, UserCog2 } from "lucide-react";
 import {
   DialogContent,
   DialogDescription,
@@ -28,7 +28,6 @@ import {
   SelectValue,
 } from "../ui/select";
 import { Button } from "../ui/button";
-import { ButtonLoader } from "../buttons";
 import { Input } from "../ui/input";
 import { useRouter } from "next/navigation";
 
@@ -155,13 +154,9 @@ const KaryawanUpdateDialog = ({
           </div>
 
           <DialogFooter>
-            {!loader ? (
-              <Button type="submit" className="w-1/4">
-                Submit
-              </Button>
-            ) : (
-              <ButtonLoader className="w-1/4 cursor-progress" />
-            )}
+            <Button type="submit" className="w-full sm:w-1/5" disabled={loader}>
+              {loader ? <Loader2 className="animate-spin" /> : "Perbarui"}
+            </Button>
           </DialogFooter>
         </form>
       </Form>

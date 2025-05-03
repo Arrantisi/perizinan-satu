@@ -116,6 +116,7 @@ const DialogPersetujuan = ({ leaveId }: { leaveId: string }) => {
         <DialogFooter>
           <ButtonSetuju
             leaveId={leaveId}
+            className="w-full sm:w-1/6"
             onSuccess={() => {
               setOpen(false);
               updateLeaveStatus("APPROVED");
@@ -123,6 +124,7 @@ const DialogPersetujuan = ({ leaveId }: { leaveId: string }) => {
           />
           <ButtonTolak
             leaveId={leaveId}
+            className="w-full sm:w-1/6"
             onSuccess={() => {
               setOpen(false);
               updateLeaveStatus("REJECTED");

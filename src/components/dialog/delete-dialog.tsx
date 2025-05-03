@@ -52,7 +52,7 @@ const DeleteDialog = ({ leaveId }: { leaveId: string }) => {
         <AlertDialogCancel>Cancel</AlertDialogCancel>
         <Button
           variant={"destructive"}
-          className="w-full md:w-20"
+          className="w-full sm:w-1/6"
           onClick={() => handleDelete()}
         >
           {loader ? <Loader2 className="animate-spin" /> : "Hapus"}

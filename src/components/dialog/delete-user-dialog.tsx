@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import {
-  AlertDialogAction,
   AlertDialogCancel,
   AlertDialogContent,
   AlertDialogDescription,
@@ -14,8 +13,15 @@ import { FileCheck2, Loader2 } from "lucide-react";
 import { deleteUser } from "@/lib/action";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import { Button } from "../ui/button";
 
-const DeleteUserDialog = ({ userId }: { userId: string }) => {
+const DeleteUserDialog = ({
+  userId,
+  alertIsOpen,
+}: {
+  userId: string;
+  alertIsOpen: () => void;
+}) => {
   const [loader, setLoader] = useState(false);
   const router = useRouter();
 
@@ -28,6 +34,7 @@ const DeleteUserDialog = ({ userId }: { userId: string }) => {
         toast(user.message, {
           icon: <FileCheck2 />,
         });
+        alertIsOpen();
         router.refresh();
       } else {
         toast.error(user.message);
@@ -50,10 +57,17 @@ const DeleteUserDialog = ({ userId }: { userId: string }) => {
         </AlertDialogDescription>
       </AlertDialogHeader>
       <AlertDialogFooter>
-        <AlertDialogCancel>Cancel</AlertDialogCancel>
-        <AlertDialogAction onClick={() => handleDelete(userId)}>
+        <AlertDialogCancel className="w-full sm:w-1/6">
+          Cancel
+        </AlertDialogCancel>
+        <Button
+          variant={"destructive"}
+          onClick={() => handleDelete(userId)}
+          className="w-full sm:w-1/5"
+          disabled={loader}
+        >
           {loader ? <Loader2 className="animate-spin" /> : "Continue"}
-        </AlertDialogAction>
+        </Button>
       </AlertDialogFooter>
     </AlertDialogContent>
   );

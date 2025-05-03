@@ -106,7 +106,7 @@ const AlertRejectedDialog = ({
               <Button
                 type="submit"
                 variant={"destructive"}
-                className="w-full lg:w-20"
+                className="w-full sm:w-20"
                 disabled={loader}
               >
                 {loader ? <Loader2 className="animate-spin" /> : "Tolak"}

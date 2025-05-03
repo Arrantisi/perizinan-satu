@@ -59,11 +59,11 @@ const FormCreateDialog = () => {
         });
 
         form.reset();
+        router.refresh();
         setOpen(false);
       } else {
         toast.error(createuser.message);
       }
-      router.refresh();
     } catch (error) {
       toast.error("ada masalah pada server");
       console.log({ error });
@@ -76,7 +76,7 @@ const FormCreateDialog = () => {
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button
-          className="mr-10"
+          className="mr-4"
           variant={"outline"}
           onClick={() => setOpen(true)}
         >
@@ -144,7 +144,7 @@ const FormCreateDialog = () => {
                 </DialogClose>
                 <Button
                   type="submit"
-                  className="w-full lg:w-1/6"
+                  className="w-full sm:w-1/6"
                   disabled={loader}
                 >
                   {loader ? <Loader2 className="animate-spin" /> : "Buat"}

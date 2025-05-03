@@ -18,11 +18,12 @@ import DeleteUserDialog from "../dialog/delete-user-dialog";
 
 const DropdownTableData = ({ id }: { id: string }) => {
   const [open, setOpen] = useState(false);
+  const [alertOpen, setAlertOpen] = useState(false);
   const [dialogType, setDialogType] = useState<"view" | "update" | null>(null);
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <AlertDialog>
+      <AlertDialog open={alertOpen} onOpenChange={setAlertOpen}>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant={"ghost"}>
@@ -48,12 +49,14 @@ const DropdownTableData = ({ id }: { id: string }) => {
             </AlertDialogTrigger>
           </DropdownMenuContent>
         </DropdownMenu>
+
         {dialogType === "view" ? (
           <ViewDialogKaryawan id={id} />
         ) : (
           <KaryawanUpdateDialog id={id} onClose={() => setOpen(false)} />
         )}
-        <DeleteUserDialog userId={id} />
+
+        <DeleteUserDialog userId={id} alertIsOpen={() => setAlertOpen(false)} />
       </AlertDialog>
     </Dialog>
   );

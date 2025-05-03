@@ -58,7 +58,6 @@ export const ButtonSetuju = ({
       onClick={() => {
         handlePersetujuan(leaveId);
       }}
-      className="w-full md:w-1/2"
       {...props}
     >
       Setuju
@@ -69,7 +68,6 @@ export const ButtonSetuju = ({
 export const ButtonTolak = ({
   leaveId,
   onSuccess,
-
   ...props
 }: ButtonPesetujuanInter) => {
   const [open, setOpen] = useState(false);
@@ -79,7 +77,6 @@ export const ButtonTolak = ({
       <AlertDialogTrigger asChild>
         <Button
           variant={"destructive"}
-          className="w-full lg:w-1/2"
           onClick={() => {
             setOpen(true);
           }}

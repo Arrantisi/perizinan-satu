@@ -10,7 +10,6 @@ import TableUser from "./components/table-user";
 import { Suspense } from "react";
 import { SkeletonTable } from "@/components/skeletons";
 import FormCreateDialog from "@/components/dialog/form-create-dialog";
-import { getUser } from "@/lib/action";
 
 const columns = [
   {
@@ -43,8 +42,6 @@ const columns = [
 ];
 
 const DataPage = async () => {
-  const users = await getUser();
-
   return (
     <Card>
       <CardHeader className="flex justify-between items-center ">
@@ -60,7 +57,7 @@ const DataPage = async () => {
       <CardContent>
         <TableComponent columns={columns}>
           <Suspense fallback={<SkeletonTable />}>
-            <TableUser users={users} />
+            <TableUser />
           </Suspense>
         </TableComponent>
       </CardContent>

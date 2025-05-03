@@ -5,16 +5,17 @@ import getInitialName from "@/utils/fullName";
 import { currentUser } from "@clerk/nextjs/server";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import React from "react";
-import { User } from "@prisma/client";
+import { getUser } from "@/lib/action";
 
-const TableUser = async ({ users }: { users: User[] }) => {
+const TableUser = async () => {
+  const users = await getUser();
   const CurrentUser = await currentUser();
 
-  const userLogin = users.filter((user) => user.id !== CurrentUser?.id);
+  const isUsers = users.filter((user) => user.id !== CurrentUser?.id);
 
   return (
     <>
-      {userLogin.map((user) => (
+      {isUsers.map((user) => (
         <TableRow key={user.id}>
           <TableCell>
             <Avatar>
