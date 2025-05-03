@@ -41,7 +41,7 @@ export async function POST(req: NextRequest) {
             email,
             name: name || "No name",
             password: "-",
-            role: "BOSS",
+            role: "EMPLOYEE",
           },
         });
       }
