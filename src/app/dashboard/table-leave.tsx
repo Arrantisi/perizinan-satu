@@ -1,5 +1,6 @@
 import DropdownTable from "@/components/dropdown/leave-dropdown-table";
 import StatusBadge from "@/components/status-badge";
+import BadgeEmptyTable from "@/components/table/badge-empty-table";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { TableCell, TableRow } from "@/components/ui/table";
 import { prisma } from "@/lib/prisma";
@@ -11,6 +12,10 @@ const LeaveTable = async () => {
   const leaves = await prisma.leave.findMany({
     include: { user: true },
   });
+
+  if (leaves.length === 0) {
+    return <BadgeEmptyTable />;
+  }
 
   return (
     <>

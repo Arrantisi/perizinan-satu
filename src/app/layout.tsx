@@ -34,7 +34,7 @@ export default function RootLayout({
     >
       <html lang="en" suppressHydrationWarning>
         <body
-          className={`${geistSans.variable} ${geistMono.variable} antialiased cursor-default`}
+          className={`${geistSans.variable} ${geistMono.variable} antialiased cursor-default relative`}
         >
           <ThemeProvider
             attribute="class"
@@ -43,6 +43,7 @@ export default function RootLayout({
             disableTransitionOnChange
           >
             {children}
+
             <Toaster richColors />
           </ThemeProvider>
         </body>

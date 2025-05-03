@@ -6,7 +6,7 @@ import Link from "next/link";
 
 export default function Home() {
   return (
-    <div className="w-full h-screen flex justify-center items-center">
+    <div className="w-full h-screen flex justify-center items-center relative">
       <div className="flex flex-col items-center gap-4 max-w-xs lg:max-w-2xl">
         <BlurFade delay={0.25} inView>
           <NavTheme />

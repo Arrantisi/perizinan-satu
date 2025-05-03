@@ -1,6 +1,6 @@
 import DropdownTable from "@/components/dropdown/leave-dropdown-table";
 import StatusBadge from "@/components/status-badge";
-import { Badge } from "@/components/ui/badge";
+import BadgeEmptyTable from "@/components/table/badge-empty-table";
 import { TableRow, TableCell } from "@/components/ui/table";
 import { getLeave } from "@/lib/action";
 import formattedDate from "@/utils/date-format";
@@ -11,15 +11,7 @@ const TableLeave = async () => {
   const leavePending = leaves.filter((leave) => leave.status !== "PENDING");
 
   if (!leavePending || leavePending.length === 0) {
-    return (
-      <TableRow className="hover:bg-card">
-        <TableCell colSpan={9} className="text-center">
-          <Badge variant={"destructive"} className="my-7 dark:bg-red-700 p-1">
-            Tidak ada surat perizinan
-          </Badge>
-        </TableCell>
-      </TableRow>
-    );
+    return <BadgeEmptyTable />;
   }
 
   return (

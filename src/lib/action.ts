@@ -11,6 +11,11 @@ import {
 import { endOfYear, startOfYear } from "date-fns";
 import { countWorkingDays } from "@/utils/countWorkingDays";
 
+const CurrentUser = async () => {
+  const user = await currentUser();
+  return user;
+};
+
 //!!! =========================================================== USER ======================================================================
 //** */ ================================================ deleteUser ================================================
 export const deleteUser = async (userId: string) => {
@@ -49,7 +54,7 @@ export const getUserLeaveSummary = async (userId?: string) => {
 
 //** */ ================================================ getUserRole ================================================
 export const getUserRole = async () => {
-  const user = await currentUser();
+  const user = await CurrentUser();
 
   if (!user) throw new Error("Unathorized");
 
@@ -73,7 +78,7 @@ export const getUser = async () => {
 
 //** */ ================================================ getCurrentUserId ================================================
 export const getCurrentUserId = async () => {
-  const user = await currentUser();
+  const user = await CurrentUser();
 
   return await prisma.user.findUnique({ where: { id: user?.id } });
 };
@@ -87,7 +92,7 @@ export const getUserById = async (id: string) => {
 
 //** */ ================================================ updateUserRole ================================================
 export const updateUserRole = async (id: string, form: KaryawanSchemaType) => {
-  const user = await currentUser();
+  const user = await CurrentUser();
 
   if (!user) return { success: false, message: "Anda tidak berwenang" };
 
@@ -108,7 +113,7 @@ export const updateUserRole = async (id: string, form: KaryawanSchemaType) => {
 //!!! ========================================================== LEAVE ======================================================================
 //** */ ================================================ ajukanIzin ================================================
 export const ajukanIzin = async (form: AjukanScemaType) => {
-  const user = await currentUser();
+  const user = await CurrentUser();
 
   if (!user) throw new Error("Unathorized");
 
@@ -153,9 +158,29 @@ export const getLeaveById = async (id: string) => {
   });
 };
 
+//** */ ================================================ getLeaveStatus ================================================
+export const getLeaveByUserId = async () => {
+  const user = await CurrentUser();
+  return await prisma.leave.findMany({
+    where: {
+      userId: user?.id,
+    },
+  });
+};
+
+export const getLeaveApproved = async () => {
+  const user = await CurrentUser();
+  return prisma.leave.findFirst({
+    where: {
+      userId: user?.id,
+      status: "APPROVED",
+    },
+  });
+};
+
 //** */ ================================================ GET LEAVE ================================================
 export const getLeave = async () => {
-  const user = await currentUser();
+  const user = await CurrentUser();
 
   return await prisma.leave.findMany({
     where: { userId: user?.id },
@@ -190,10 +215,13 @@ export const deleteLeave = async (leaveId: string) => {
 //??? ======================================================== LEAVE CALENDER ===============================================================
 
 export const getAllLeaveDates = async () => {
-  const user = await currentUser();
+  const user = await CurrentUser();
 
   const leaves = await prisma.leave.findMany({
-    where: { userId: user?.id },
+    where: {
+      userId: user?.id,
+      status: "APPROVED",
+    },
     select: {
       startDate: true,
       endDate: true,
@@ -204,6 +232,10 @@ export const getAllLeaveDates = async () => {
   for (const leave of leaves) {
     const current = new Date(leave.startDate);
     const end = new Date(leave.endDate);
+
+    current.setUTCHours(0, 0, 0, 0);
+    end.setUTCHours(0, 0, 0);
+
     while (current <= end) {
       dates.push(new Date(current));
       current.setDate(current.getDate() + 1);
@@ -216,7 +248,7 @@ export const getAllLeaveDates = async () => {
 //??? ========================================================== LEAVE BOSS =================================================================
 //** */ ================================================ persetujuan ================================================
 export const persetujuan = async (id: string) => {
-  const user = await currentUser();
+  const user = await CurrentUser();
 
   if (!user) throw new Error("Unauthorized");
 
@@ -250,7 +282,7 @@ export const persetujuan = async (id: string) => {
 
 //** */ ================================================ tolakLeave ================================================
 export const tolakLeave = async (leaveId: string, form: RejectedSchemaType) => {
-  const user = await currentUser();
+  const user = await CurrentUser();
 
   if (!user) throw new Error("Unauthorized");
 
@@ -260,18 +292,12 @@ export const tolakLeave = async (leaveId: string, form: RejectedSchemaType) => {
     throw new Error("Kamu tidak berhak melakukan penolakan");
   }
 
-  await prisma.leave.update({
-    where: { id: leaveId },
-    data: {
-      reasonRejected: form.reasonRejected,
-    },
-  });
-
   try {
     const leave = await prisma.leave.update({
       where: { id: leaveId },
       data: {
         status: "REJECTED",
+        reasonRejected: form.reasonRejected,
         reviewedBy: reviewer.name,
         reviewedAt: new Date(),
       },
