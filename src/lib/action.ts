@@ -5,6 +5,7 @@ import { clerkClient } from "@clerk/clerk-sdk-node";
 import { prisma } from "./prisma";
 import {
   AjukanScemaType,
+  CreateUserAndInviteSchemaType,
   KaryawanSchemaType,
   RejectedSchemaType,
 } from "@/schema";
@@ -17,6 +18,32 @@ const CurrentUser = async () => {
 };
 
 //!!! =========================================================== USER ======================================================================
+//** */ ================================================ CREATE EMPLOYEE ================================================
+export const createUserAndInvite = async (
+  form: CreateUserAndInviteSchemaType
+) => {
+  const getEmail = await clerkClient.users.getUserList({
+    emailAddress: [form.email],
+  });
+
+  if (getEmail.length > 0) {
+    return { succsess: false, message: "Email sudah terdaftar" };
+  }
+
+  try {
+    await clerkClient.users.createUser({
+      emailAddress: [form.email],
+      firstName: form.firsName,
+      lastName: form.lastName,
+    });
+
+    return { success: true, message: "user berhasil di buat" };
+  } catch (error) {
+    console.log(String(error));
+    return { success: false, message: "❌ gagal membuat user" };
+  }
+};
+
 //** */ ================================================ deleteUser ================================================
 export const deleteUser = async (userId: string) => {
   try {

@@ -1,14 +1,13 @@
 import DropdownTableData from "@/components/dropdown/karyawan-dropdown-table";
 import { TableRow, TableCell } from "@/components/ui/table";
-import { getUser } from "@/lib/action";
 import formattedDate from "@/utils/date-format";
 import getInitialName from "@/utils/fullName";
 import { currentUser } from "@clerk/nextjs/server";
-import { Avatar, AvatarFallback } from "@radix-ui/react-avatar";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import React from "react";
+import { User } from "@prisma/client";
 
-const TableUser = async () => {
-  const users = await getUser();
+const TableUser = async ({ users }: { users: User[] }) => {
   const CurrentUser = await currentUser();
 
   const userLogin = users.filter((user) => user.id !== CurrentUser?.id);

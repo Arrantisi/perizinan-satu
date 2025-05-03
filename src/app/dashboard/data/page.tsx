@@ -9,6 +9,8 @@ import {
 import TableUser from "./components/table-user";
 import { Suspense } from "react";
 import { SkeletonTable } from "@/components/skeletons";
+import FormCreateDialog from "@/components/dialog/form-create-dialog";
+import { getUser } from "@/lib/action";
 
 const columns = [
   {
@@ -41,19 +43,24 @@ const columns = [
 ];
 
 const DataPage = async () => {
+  const users = await getUser();
+
   return (
     <Card>
-      <CardHeader>
-        <CardTitle>table data karyawan</CardTitle>
-        <CardDescription>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias,
-          nihil.
-        </CardDescription>
+      <CardHeader className="flex justify-between items-center ">
+        <div>
+          <CardTitle>table data karyawan</CardTitle>
+          <CardDescription>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias,
+            nihil.
+          </CardDescription>
+        </div>
+        <FormCreateDialog />
       </CardHeader>
       <CardContent>
         <TableComponent columns={columns}>
           <Suspense fallback={<SkeletonTable />}>
-            <TableUser />
+            <TableUser users={users} />
           </Suspense>
         </TableComponent>
       </CardContent>
